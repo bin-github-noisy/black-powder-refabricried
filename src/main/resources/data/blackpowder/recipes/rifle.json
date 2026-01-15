@@ -1,21 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "F": "blackpowder:firing_mechanism",
+    "G": "blackpowder:grip",
+    "R": "blackpowder:rifled_barrel"
+  },
   "pattern": [
     "FRR",
     "G  "
   ],
-  "key": {
-    "F": {
-      "item": "blackpowder:firing_mechanism"
-    },
-    "G": {
-      "item": "blackpowder:grip"
-    },
-    "R": {
-      "item": "blackpowder:rifled_barrel"
-    }
-  },
   "result": {
-    "item": "blackpowder:rifle"
+    "count": 1,
+    "id": "blackpowder:rifle"
   }
 }

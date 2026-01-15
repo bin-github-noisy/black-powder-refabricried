@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": "#minecraft:planks"
+  },
   "pattern": [
     "III",
     "I  "
   ],
-  "key": {
-    "I": {
-      "tag": "minecraft:planks"
-    }
-  },
   "result": {
-    "item": "blackpowder:grip"
+    "count": 1,
+    "id": "blackpowder:grip"
   }
 }

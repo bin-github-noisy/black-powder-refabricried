@@ -1,20 +1,20 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "blackpowder:item/extra/flintlock"
+		"layer0": "blackpowder:item/extra/rifle"
 	},
 	"overrides": [
 		{
 			"predicate": {
 				"charged": 0
 			},
-			"model": "blackpowder:item/extra/flintlock_unloaded"
+			"model": "blackpowder:item/extra/rifle_unloaded"
 		},
 		{
 			"predicate": {
 				"charged": 1
 			},
-			"model": "blackpowder:item/extra/flintlock_loaded"
+			"model": "blackpowder:item/extra/rifle_loaded"
 		}
 	]
 }
