@@ -1,0 +1,123 @@
+package xyz.amymialee.blackpowder.registry;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageSources;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
+import net.minecraft.text.TextColor;
+import xyz.amymialee.blackpowder.util.GunEntry;
+
+public class BlackPowderGunEntries {
+    public static GunEntry ENTRY_DREYSE_NEEDLE_GUN = new GunEntry()
+            .setReloadTime(40)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setDamage(40)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_RIFLE_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
+    public static GunEntry ENTRY_CHASSPOT_NEEDLE_GUN = new GunEntry()
+            .setReloadTime(45)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setDamage(30)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_RIFLE_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
+    public static GunEntry ENTRY_WERNDL_NEEDLE_GUN = new GunEntry()
+            .setReloadTime(35)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setDamage(32)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_RIFLE_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
+    public static GunEntry ENTRY_FLINTLOCK_PISTOL = new GunEntry()
+            .setReloadTime(50)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setDamage(10)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
+    public static GunEntry ENTRY_BLUNDERBUSS = new GunEntry()
+            .setReloadTime(80)
+            .setAmmoPredicate(BlackPowderItems.BLUNDER_BALL)
+            .setPelletCount(10)
+            .setBulletSpread(15)
+            .setDamage(7)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_BLUNDERBUSS_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_END);
+    public static GunEntry ENTRY_RIFLE = new GunEntry()
+            .setReloadTime(60)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setDamage(25)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_RIFLE_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_RIFLE_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_RIFLE_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_RIFLE_LOADING_END);
+    public static GunEntry ENTRY_MUSKET = new GunEntry()
+            .setReloadTime(120)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setDamage(30)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_MUSKET_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_MUSKET_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_MUSKET_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_MUSKET_LOADING_END);
+    public static GunEntry ENTRY_FLINTLOCK_CARBINE = new GunEntry()
+            .setReloadTime(1)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setDamage(10)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END)
+            .setScope(true)
+            .setTextColor(TextColor.fromRgb(8802476));
+    public static GunEntry ENTRY_BLUNDERBEHEMOTH = new GunEntry()
+            .setReloadTime(80)
+            .setAmmoPredicate(BlackPowderItems.BLUNDER_BALL)
+            .setPelletCount(160)
+            .setBulletSpread(15)
+            .setDamage(4)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_BLUNDERBUSS_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_END)
+            .setScope(false)
+            .setTextColor(TextColor.fromRgb(8802476));
+    public static GunEntry ENTRY_RESOLUTE_RIFLE = new GunEntry()
+            .setReloadTime(60)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setPelletCount(8)
+            .setDamage(22)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_RIFLE_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_RIFLE_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_RIFLE_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_RIFLE_LOADING_END)
+            .setTextColor(TextColor.fromRgb(8802476));
+    public static GunEntry ENTRY_BOUNDLESS_MUSKET = new GunEntry()
+            .setReloadTime(120)
+            .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
+            .setDamage(320)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_MUSKET_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_MUSKET_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_MUSKET_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_MUSKET_LOADING_END)
+            .setTextColor(TextColor.fromRgb(8802476));
+}
