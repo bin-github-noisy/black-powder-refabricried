@@ -57,6 +57,9 @@ public class GunAnimationHandler {
             if (gunItem == BlackPowderItems.FLINTLOCK_PISTOL || gunItem == BlackPowderItems.BRASS_PISTOL) {
                  tiltAngle = 45.0f;
              }
+            if (gunItem == BlackPowderItems.BRASS_SHOTGUN) {
+                tiltAngle = 20.0f;
+            }
             
             // 应用旋转：让枪管竖直向上
             matrices.multiply(new Quaternionf().rotationX((float) Math.toRadians(tiltAngle)));  // 根据装填进度调整旋转角度

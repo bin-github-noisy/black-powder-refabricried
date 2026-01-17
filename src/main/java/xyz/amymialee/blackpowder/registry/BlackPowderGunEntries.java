@@ -1,11 +1,5 @@
 package xyz.amymialee.blackpowder.registry;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageSources;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 import net.minecraft.text.TextColor;
 import xyz.amymialee.blackpowder.util.GunEntry;
 
@@ -66,6 +60,18 @@ public class BlackPowderGunEntries {
             .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
     public static GunEntry ENTRY_BRASS_BLUNDERBUSS = new GunEntry()
             .setReloadTime(60)
+            .setAmmoPredicate(BlackPowderItems.BLUNDER_BALL)
+            .setPelletCount(12)
+            .setBulletSpread(30)
+            .setDamage(12)
+            .setSource((e) -> e.getDamageSources().generic())
+            .setFireSound(BlackPowderSounds.ITEM_BLUNDERBUSS_SHOOT)
+            .setReloadSoundStart(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_START)
+            .setReloadSoundMiddle(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_MIDDLE)
+            .setReloadSoundEnd(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_END);
+    public static GunEntry ENTRY_BRASS_SHOTGUN = new GunEntry()
+            .setAmmoCount(2)
+            .setReloadTime(20)
             .setAmmoPredicate(BlackPowderItems.BLUNDER_BALL)
             .setPelletCount(12)
             .setBulletSpread(30)

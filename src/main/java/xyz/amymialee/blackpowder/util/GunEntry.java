@@ -37,11 +37,13 @@ public class GunEntry {
     boolean glint = false;
 
     public float getDamage(double distance) {
-        if (distance > this.maxRange) return this.getDamage() / 2;
+        if (distance > this.maxRange) return this.getDamage() * 0.75f; // 远距离不再减半，改为75%
         if (distance < this.midRange) {
-            return MathHelper.lerp((float) Math.abs(distance) / this.midRange, this.getDamage() * 1.5f, this.getDamage());
+            return MathHelper.lerp((float) Math.abs(distance) / this.midRange, this.getDamage() * 1.1f, this.getDamage()); // 近距离不再1.5倍，改为1.1倍
         } else {
-            return MathHelper.lerp((float) (1 - (distance - this.midRange) / (this.maxRange - this.midRange)), this.getDamage() / 2, this.getDamage());
+            // 平缓衰减：从中距离的基础伤害到远距离的75%
+            float rangeRatio = (float) (distance - this.midRange) / (this.maxRange - this.midRange);
+            return MathHelper.lerp(rangeRatio, this.getDamage(), this.getDamage() * 0.75f);
         }
     }
 
