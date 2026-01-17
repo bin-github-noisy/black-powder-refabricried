@@ -2,66 +2,108 @@ package xyz.amymialee.blackpowder.client;
 
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
+import net.minecraft.util.Hand;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import org.joml.Quaternionf;
 import xyz.amymialee.blackpowder.items.GunItem;
+import xyz.amymialee.blackpowder.registry.BlackPowderItems;
 
 /**
  * 处理枪械的通用动画逻辑，特别是装填动画
  */
 public class GunAnimationHandler {
-
-    /**
-     * 平滑插值函数，使动画更流畅
-     */
-    private static float easeInOutQuad(float t) {
-        return t < 0.5f ? 2.0f * t * t : -1.0f + (4.0f - 2.0f * t) * t;
-    }
     
     /**
      * 应用装填动画变换到矩阵栈
-     * 实现枪口90度上扬后上下摆动的效果
+     * 实现您提供的复杂装填动画效果
      *
      * @param matrices 矩阵栈
      * @param arm 使用的手臂
      * @param reloadProgress 装填进度 (0.0-1.0)
      * @param gunItem 枪械物品
+     * @param swingProgress 挥动进度
+     * @param stack 物品栈
+     * @param hand 使用的手
+     */
+    public static void applyReloadAnimation(MatrixStack matrices, Arm arm, float reloadProgress, GunItem gunItem, float swingProgress, ItemStack stack, Hand hand) {
+        int sign = (arm == Arm.RIGHT) ? 1 : -1;
+        
+        // 首先检查是否有挥动动画，如果有则应用挥动动画
+        if (swingProgress > 0) {
+            float swingSharp = MathHelper.sin(MathHelper.sqrt(swingProgress) * (float) Math.PI);
+            float swingNormal = MathHelper.sin(swingProgress * (float) Math.PI);
+            
+            // 检查是否是特定类型的枪械，这里暂时注释掉具体比较，因为需要根据实际项目中的枪类型进行调整
+            // if (gunItem == Items.MUSKET_WITH_BAYONET) {
+            //     matrices.translate(sign * -0.05 * swingNormal, 0, 0.05 - 0.3 * swingSharp);
+            //     matrices.multiply(new Quaternionf().rotationY((float) Math.toRadians(5 * swingSharp)));
+            // } else {
+                // 调整挥动动画参数，避免过度旋转或移出视野
+                matrices.translate(sign * 0.02 * (1 - swingNormal), 0.01 * (1 - swingNormal), 0.02 - 0.1 * swingSharp);
+                // 使用更温和的旋转，避免枪械完全翻转
+                matrices.multiply(new Quaternionf().rotationX((float) Math.toRadians(20 + sign * 10 * (1 - swingSharp))));
+            // }
+        } else {
+            // 没有挥动动画，检查是否处于装填状态
+            // 这里的reloadProgress是装填进度，范围0.0-1.0
+            
+            // 根据装填进度计算枪管上仰角度，开始时装填进度为0，结束时为1
+            float tiltAngle = 60.0f; // 开始时60度上仰，结束时0度
+            
+            // 应用位置调整，确保枪械保持在视野内
+            matrices.translate(0, -0.05f, 0.05f);  // 微小的调整，避免枪械移出视野
+
+            if (gunItem == BlackPowderItems.FLINTLOCK_PISTOL || gunItem == BlackPowderItems.BRASS_PISTOL) {
+                 tiltAngle = 45.0f;
+             }
+            
+            // 应用旋转：让枪管竖直向上
+            matrices.multiply(new Quaternionf().rotationX((float) Math.toRadians(tiltAngle)));  // 根据装填进度调整旋转角度
+            matrices.multiply(new Quaternionf().rotationZ((float) Math.toRadians(2)));   // 极小的旋转角度
+            
+            // 基于总装填时间的比例计算装填阶段时间
+            int reloadDuration = gunItem.gunEntry.getReloadTime();
+            float actualReloadProgress = Math.max(0, Math.min(1, reloadProgress)); // 确保进度在0-1之间
+            int actualTimeElapsed = (int) (actualReloadProgress * reloadDuration);
+            
+            int loadingStage1 = reloadDuration / 6;      // 总装填时间的1/6
+            int loadingStage2 = reloadDuration / 3;     // 总装填时间的1/3
+            int loadingStage3 = reloadDuration * 2 / 3;  // 总装填时间的2/3
+            
+            // 减缓装填动画速度：延长动画持续时间，减小移动幅度
+            if ((actualTimeElapsed >= loadingStage1 && actualTimeElapsed <= loadingStage1 + 10) ||
+                (actualTimeElapsed >= loadingStage2 && actualTimeElapsed <= loadingStage2 + 10) ||
+                (actualTimeElapsed >= loadingStage3 && actualTimeElapsed <= loadingStage3 + 10)) {
+                float t;
+                if (actualTimeElapsed >= loadingStage1 && actualTimeElapsed <= loadingStage1 + 10) {
+                    float stageProgress = (actualTimeElapsed - loadingStage1) / 10.0f; // 在该阶段内的进度
+                    t = MathHelper.sin((float) Math.PI / 2 * MathHelper.sqrt(stageProgress));
+                } else if (actualTimeElapsed >= loadingStage2 && actualTimeElapsed <= loadingStage2 + 10) {
+                    float stageProgress = (actualTimeElapsed - loadingStage2) / 10.0f; // 在该阶段内的进度
+                    t = MathHelper.sin((float) Math.PI / 2 * MathHelper.sqrt(stageProgress));
+                } else if (actualTimeElapsed >= loadingStage3 && actualTimeElapsed <= loadingStage3 + 10) {
+                    float stageProgress = (actualTimeElapsed - loadingStage3) / 10.0f; // 在该阶段内的进度
+                    t = MathHelper.sin((float) Math.PI / 2 * MathHelper.sqrt(stageProgress));
+                } else {
+                    t = 0; // 不在关键阶段，无动画效果
+                }
+                matrices.translate(0.003f * t, 0, 0.3f * t);  // 进一步大幅减小移动幅度
+            }
+            
+            // 检查是否是特定类型的枪械，这里暂时注释掉，因为需要根据实际项目中的枪类型进行调整
+            // if (gunItem == Items.PISTOL) {
+            //     matrices.translate(0, 0, -0.12);
+            // }
+        }
+    }
+    
+    /**
+     * 适用于HeldItemRendererMixin的简化方法
      */
     public static void applyReloadAnimation(MatrixStack matrices, Arm arm, float reloadProgress, GunItem gunItem) {
-        int armOffset = (arm == Arm.RIGHT) ? 1 : -1;
-
-        // 初始位置偏移
-        matrices.translate(armOffset * -0.4785682f, -0.0943870022892952f, 0.05731530860066414f);
-
-        // 计算上扬和摆动进度
-        // 将整个动画分为两部分：前半部分上扬，后半部分摆动
-        float upswingProgress = Math.min(reloadProgress * 2.0f, 1.0f); // 前半段用于上扬
-        float swayProgress = Math.max(0.0f, (reloadProgress - 0.5f) * 2.0f); // 后半段用于摆动
-
-        // 使用平滑插值函数使动画更流畅
-        float smoothUpswing = easeInOutQuad(upswingProgress);
-        float smoothSway = easeInOutQuad(swayProgress);
-
-        // 应用上扬旋转：枪口向上抬升，枪托向下，绕X轴旋转（这是枪管方向）
-        float upswingAngle = smoothUpswing * 70f; // 从0到70度，减少最大角度以避免过度旋转
-        matrices.multiply(new Quaternionf().rotationX((float) Math.toRadians(upswingAngle)));
-
-        // 应用水平旋转 (轻微的Z轴旋转，让枪更自然地抬起)
-//        matrices.multiply(new Quaternionf().rotationZ((float) Math.toRadians(armOffset * smoothUpswing * 10f)));
-
-        // 在摆动阶段添加更流畅的上下摆动效果
-        if (smoothSway > 0) {
-            // 使用更平滑的函数来减少抽搐，降低摆动频率和幅度
-            float swayAmount = (float) (Math.sin(smoothSway * Math.PI * 10) * 2f * (1.0f - smoothSway * 0.5f)); // 2个周期，较小幅度，逐渐减弱
-            matrices.multiply(new Quaternionf().rotationY((float) Math.toRadians(swayAmount * 0.7f))); // 更小的旋转角度
-            
-            // 添加平滑的位置变化来增强真实感，减少幅度
-            float positionSway = (float) (Math.sin(smoothSway * Math.PI * 1.5) * 0.005f * (1.0f - smoothSway * 0.3f));
-            matrices.translate(0.0f, positionSway * 0.5f, -positionSway * 0.2f);
-        }
-
-        // 根据装填进度调整缩放，模拟装填过程中握持的变化
-        float scaleAdjust = 1.0f - (reloadProgress * 0.05f);
-        matrices.scale(scaleAdjust, scaleAdjust, scaleAdjust);
+        // 调用完整版本，传入默认值
+        applyReloadAnimation(matrices, arm, reloadProgress, gunItem, 0.0f, ItemStack.EMPTY, null);
     }
     
     /**

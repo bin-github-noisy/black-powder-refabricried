@@ -69,7 +69,7 @@ public class BlackPowderGunEntries {
             .setAmmoPredicate(BlackPowderItems.BLUNDER_BALL)
             .setPelletCount(12)
             .setBulletSpread(30)
-            .setDamage(9)
+            .setDamage(12)
             .setSource((e) -> e.getDamageSources().generic())
             .setFireSound(BlackPowderSounds.ITEM_BLUNDERBUSS_SHOOT)
             .setReloadSoundStart(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_START)

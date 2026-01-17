@@ -3,6 +3,7 @@ package xyz.amymialee.blackpowder.mixin.client;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
@@ -24,7 +25,7 @@ public class PlayerEntityRendererMixin {
                 cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_HOLD);
             } else {
                 // 修复：使用新的数据组件系统替代旧的 getOrCreateTag 方法
-                var nbtComponent = itemStack.get(net.minecraft.component.DataComponentTypes.CUSTOM_DATA);
+                var nbtComponent = itemStack.get(DataComponentTypes.CUSTOM_DATA);
                 var nbt = nbtComponent != null ? nbtComponent.copyNbt() : null;
                 if (nbt != null && nbt.getBoolean("reloading").orElse(false)) {
                     cir.setReturnValue(BipedEntityModel.ArmPose.CROSSBOW_CHARGE);
