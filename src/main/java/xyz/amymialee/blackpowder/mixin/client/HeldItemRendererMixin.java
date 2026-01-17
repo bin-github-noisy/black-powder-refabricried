@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import xyz.amymialee.blackpowder.client.GunAnimationHandler;
 import xyz.amymialee.blackpowder.items.GunItem;
 
 @Mixin(HeldItemRenderer.class)
@@ -42,25 +43,16 @@ public abstract class HeldItemRendererMixin {
             // 修复：使用新的数据组件系统替代旧的NBT方法
             if (nbt != null && nbt.getBoolean("reloading").orElse(false)) {
                 this.applyEquipOffset(matrices, arm, 0.0f);
-                matrices.translate(armOffset * -0.4785682f, -0.0943870022892952, 0.05731530860066414);
-                matrices.multiply(new Quaternionf().rotationX(-11.935f * (float)Math.PI / 180));
-                matrices.multiply(new Quaternionf().rotationY((float) armOffset * 65.3f * (float)Math.PI / 180));
-                matrices.multiply(new Quaternionf().rotationZ((float) armOffset * -9.785f * (float)Math.PI / 180));
-                // 修复：使用新的数据组件系统替代旧的NBT方法
+                
+                // 计算装填进度
                 float timeRemaining = nbt.getInt("reloadProgress").orElse(0) - tickDelta + 1.0f;
                 float reloadProgress = timeRemaining / gunItem.gunEntry.getReloadTime();
                 if (reloadProgress > 1.0f) {
                     reloadProgress = 1.0f;
                 }
-                if (reloadProgress > 0.1f) {
-                    float h = MathHelper.sin((timeRemaining - 0.1F) * 1.3f);
-                    float j = reloadProgress - 0.1f;
-                    float k = h * j;
-                    matrices.translate(k * 0.0f, k * 0.004f, k * 0.0f);
-                }
-                matrices.translate(0.0f, 0.2f, reloadProgress * 0.04f);
-                matrices.scale(1.0f, 1.0f, 1.0f + reloadProgress * 0.2f);
-                matrices.multiply(new Quaternionf().rotationY(armOffset * -45.0f * (float)Math.PI / 180));
+                
+                // 应用新的通用装填动画
+                GunAnimationHandler.applyReloadAnimation(matrices, arm, reloadProgress, gunItem);
             } else {
                 float f = -0.4f * MathHelper.sin(MathHelper.sqrt(swingProgress) * 3.1415927f);
                 float g = 0.2f * MathHelper.sin(MathHelper.sqrt(swingProgress) * 6.2831855f);

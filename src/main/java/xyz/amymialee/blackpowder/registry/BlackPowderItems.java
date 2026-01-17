@@ -36,10 +36,11 @@ public class BlackPowderItems {
     public static Item MUSKET_BALL = registerItem("musket_ball", new Item(createItemSettings("musket_ball").component(DataComponentTypes.MAX_STACK_SIZE, 64)), ITEMS_AMMO);
     public static Item BLUNDER_BALL = registerItem("blunder_ball", new Item(createItemSettings("blunder_ball").component(DataComponentTypes.MAX_STACK_SIZE, 64)), ITEMS_AMMO);
     //Guns
-    public static Item BRASS_PISTOL = registerItem("brass_pistol", new GunItem(BlackPowderGunEntries.ENTRY_FLINTLOCK_PISTOL, createGunItemSettings("brass_pistol")), ITEMS_GUNS);
+    public static Item BRASS_RIFLE = registerItem("brass_rifle", new GunItem(BlackPowderGunEntries.ENTRY_BRASS_RIFLE, createGunItemSettings("brass_rifle")), ITEMS_GUNS);
+    public static Item BRASS_PISTOL = registerItem("brass_pistol", new GunItem(BlackPowderGunEntries.ENTRY_BRASS_FLINTLOCK_PISTOL, createGunItemSettings("brass_pistol")), ITEMS_GUNS);
     public static Item FLINTLOCK_PISTOL = registerItem("flintlock_pistol", new GunItem(BlackPowderGunEntries.ENTRY_FLINTLOCK_PISTOL, createGunItemSettings("flintlock_pistol")), ITEMS_GUNS);
     public static Item BLUNDERBUSS = registerItem("blunderbuss", new GunItem(BlackPowderGunEntries.ENTRY_BLUNDERBUSS, createGunItemSettings("blunderbuss")), ITEMS_GUNS);
-    public static Item BRASS_BLUNDERBUSS = registerItem("brass_blunderbuss", new GunItem(BlackPowderGunEntries.ENTRY_BLUNDERBUSS, createGunItemSettings("brass_blunderbuss")), ITEMS_GUNS);
+    public static Item BRASS_BLUNDERBUSS = registerItem("brass_blunderbuss", new GunItem(BlackPowderGunEntries.ENTRY_BRASS_BLUNDERBUSS, createGunItemSettings("brass_blunderbuss")), ITEMS_GUNS);
     public static Item RIFLE = registerItem("rifle", new GunItem(BlackPowderGunEntries.ENTRY_RIFLE, createGunItemSettings("rifle")), ITEMS_GUNS);
     public static Item MUSKET = registerItem("musket", new GunItem(BlackPowderGunEntries.ENTRY_MUSKET, createGunItemSettings("musket")), ITEMS_GUNS);
     public static Item CHASSPOT_NEEDLE_GUN = registerItem("chesspot_needle_gun", new GunItem(BlackPowderGunEntries.ENTRY_CHASSPOT_NEEDLE_GUN, createGunItemSettings("chesspot_needle_gun")), ITEMS_GUNS);

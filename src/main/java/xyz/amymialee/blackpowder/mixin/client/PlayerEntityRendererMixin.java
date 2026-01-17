@@ -14,7 +14,7 @@ import xyz.amymialee.blackpowder.items.GunItem;
 
 @Mixin(PlayerEntityRenderer.class)
 public class PlayerEntityRendererMixin {
-    @Inject(method = "getArmPose", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getArmPose*", at = @At("HEAD"), cancellable = true)
     private static void blackPowder$holdGun(AbstractClientPlayerEntity abstractClientPlayerEntity, Arm arm, CallbackInfoReturnable<BipedEntityModel.ArmPose> cir) {
         // 根据手臂获取对应的手
         Hand hand = (arm == Arm.LEFT) ? Hand.OFF_HAND : Hand.MAIN_HAND;
