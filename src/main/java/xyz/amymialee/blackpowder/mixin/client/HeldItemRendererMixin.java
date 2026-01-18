@@ -32,49 +32,61 @@ public abstract class HeldItemRendererMixin {
     private void blackPowder$holdGunProperly(AbstractClientPlayerEntity player, float tickDelta, float pitch, Hand hand, float swingProgress, ItemStack stack, float equipProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
         if (stack.getItem() instanceof GunItem gunItem) {
             matrices.push();
+                        
+            Arm arm = hand == Hand.MAIN_HAND ? player.getMainArm() : player.getMainArm().getOpposite();
+            boolean rightArm = arm == Arm.RIGHT;
+            int armOffset = rightArm ? 1 : -1;
+                        
             // 修复：使用新的数据组件系统替代旧的NBT方法
             var nbtComponent = stack.get(net.minecraft.component.DataComponentTypes.CUSTOM_DATA);
             var nbt = nbtComponent != null ? nbtComponent.copyNbt() : null;
             boolean scoped = nbt != null && nbt.getBoolean("scoped").orElse(false);
             boolean mainHand = hand == Hand.MAIN_HAND;
             // 修复：正确确定当前使用的手臂，对于副手枪械也正确识别
-            Arm arm = hand == Hand.MAIN_HAND ? player.getMainArm() : player.getMainArm().getOpposite();
-            boolean rightArm = arm == Arm.RIGHT;
-            int armOffset = rightArm ? 1 : -1;
-            // 修复：使用新的数据组件系统替代旧的NBT方法
-            if (nbt != null && nbt.getBoolean("reloading").orElse(false)) {
-                this.applyEquipOffset(matrices, arm, 0.0f);
 
-                // 应用基本的位置偏移以确保枪械在正确位置显示
-                matrices.translate(armOffset * -0.1f, -0.4f, -0.1f); // 基本偏移，将枪械放置在合适位置
-                
-                // 计算装填进度
-                float timeRemaining = nbt.getInt("reloadProgress").orElse(0) - tickDelta + 1.0f;
-                float reloadProgress = timeRemaining / gunItem.gunEntry.getReloadTime();
-                if (reloadProgress > 1.0f) {
-                    reloadProgress = 1.0f;
-                }
-
+            // 检查是否正在装填
+            boolean isReloading = nbt != null && nbt.getBoolean("reloading").orElse(false);
+            boolean isLeftHanded = player.getMainArm() == Arm.LEFT;
+            
+            // 应用新的第一人称动画
+            GunAnimationHandler.applyFirstPersonAnimation(
+                matrices,
+                player,
+                arm,
+                MathHelper.sin((swingProgress * 2 - 0.5f) * MathHelper.PI) * 0.5F + 0.5F, // f参数
+                MathHelper.sin((equipProgress * 2 - 0.5f) * MathHelper.PI) * 0.5F + 0.5F, // f1参数
+                tickDelta,
+                isReloading,
+                isLeftHanded,
+                true // isFirstPerson
+            );
+            
+            // 计算装填进度
+            float timeRemaining = (nbt != null ? nbt.getInt("reloadProgress").orElse(0) : 0) - tickDelta + 1.0f;
+            float reloadProgress = gunItem.gunEntry.getReloadTime() > 0 ? timeRemaining / gunItem.gunEntry.getReloadTime() : 0;
+            if (reloadProgress > 1.0f) {
+                reloadProgress = 1.0f;
+            }
+            
+            // 应用装填动画（如果正在装填）
+            if (nbt != null && isReloading) {
                 // 应用新的通用装填动画
                 // 在装填期间，挥动进度应该为0，以避免冲突
-                GunAnimationHandler.applyReloadAnimation(matrices, arm, reloadProgress, gunItem, 0.0f, stack, hand);
-            } else {
-                // 完全禁用原版swing动画以避免与自定义动画冲突
-                // float f = -0.4f * MathHelper.sin(MathHelper.sqrt(swingProgress) * 3.1415927f);
-                // float g = 0.2f * MathHelper.sin(MathHelper.sqrt(swingProgress) * 6.2831855f);
-                // float h = -0.2f * MathHelper.sin(swingProgress * 3.1415927f);
-                // matrices.translate(armOffset * f, g, h);
-
-                // 应用基本的位置偏移以确保枪械在正确位置显示，但避免复杂的动画
-                matrices.translate(armOffset * -0.1f, -0.4f, -0.3f); // 基本垂直偏移，将枪械放置在合适位置
-                
-                // this.applySwingOffset(matrices, arm, swingProgress); // 禁用swing动画
-                
-                if (scoped && swingProgress < 0.001f && mainHand) {
-                    matrices.translate(armOffset * -0.641864f, 0.0, 0.0);
-                    matrices.multiply(new Quaternionf().rotationY((float) armOffset * 10.0f * (float)Math.PI / 180));
-                }
+                GunAnimationHandler.applyFirstPersonReloadAnimation(
+                        matrices,
+                        player,
+                        arm,
+                        MathHelper.sin((swingProgress * 2 - 0.5f) * MathHelper.PI) * 0.5F + 0.5F, // f参数
+                        MathHelper.sin((equipProgress * 2 - 0.5f) * MathHelper.PI) * 0.5F + 0.5F, // f1参数
+                        tickDelta,
+                        isReloading,
+                        isLeftHanded,
+                        true // isFirstPerson
+                );
             }
+            
+            // 应用基本的位置偏移以确保枪械在正确位置显示
+            matrices.translate(armOffset * 0.05f, -0.42f, -0.25f); // 基本偏移，将枪械放置在合适位置
             
             // 修复：使用更简单的ItemRenderer.renderItem方法
             ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();

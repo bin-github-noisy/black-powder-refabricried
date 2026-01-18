@@ -5,7 +5,7 @@ import xyz.amymialee.blackpowder.util.GunEntry;
 
 public class BlackPowderGunEntries {
     public static GunEntry ENTRY_DREYSE_NEEDLE_GUN = new GunEntry()
-            .setReloadTime(40)
+            .setReloadTime(120)
             .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
             .setDamage(40)
             .setSource((e) -> e.getDamageSources().generic())
@@ -14,7 +14,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
             .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
     public static GunEntry ENTRY_CHASSPOT_NEEDLE_GUN = new GunEntry()
-            .setReloadTime(45)
+            .setReloadTime(105)
             .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
             .setDamage(30)
             .setSource((e) -> e.getDamageSources().generic())
@@ -23,7 +23,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
             .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
     public static GunEntry ENTRY_WERNDL_NEEDLE_GUN = new GunEntry()
-            .setReloadTime(35)
+            .setReloadTime(125)
             .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
             .setDamage(32)
             .setSource((e) -> e.getDamageSources().generic())
@@ -32,7 +32,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
             .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
     public static GunEntry ENTRY_FLINTLOCK_PISTOL = new GunEntry()
-            .setReloadTime(50)
+            .setReloadTime(150)
             .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
             .setDamage(10)
             .setSource((e) -> e.getDamageSources().generic())
@@ -41,7 +41,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
             .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
     public static GunEntry ENTRY_BRASS_RIFLE = new GunEntry()
-            .setReloadTime(45)
+            .setReloadTime(145)
             .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
             .setDamage(28)
             .setSource((e) -> e.getDamageSources().generic())
@@ -50,7 +50,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundMiddle(BlackPowderSounds.ITEM_RIFLE_LOADING_MIDDLE)
             .setReloadSoundEnd(BlackPowderSounds.ITEM_RIFLE_LOADING_END);
     public static GunEntry ENTRY_BRASS_FLINTLOCK_PISTOL = new GunEntry()
-            .setReloadTime(35)
+            .setReloadTime(135)
             .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
             .setDamage(12)
             .setSource((e) -> e.getDamageSources().generic())
@@ -59,7 +59,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundMiddle(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_MIDDLE)
             .setReloadSoundEnd(BlackPowderSounds.ITEM_FLINTLOCK_PISTOL_LOADING_END);
     public static GunEntry ENTRY_BRASS_BLUNDERBUSS = new GunEntry()
-            .setReloadTime(60)
+            .setReloadTime(160)
             .setAmmoPredicate(BlackPowderItems.BLUNDER_BALL)
             .setPelletCount(12)
             .setBulletSpread(30)
@@ -71,7 +71,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundEnd(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_END);
     public static GunEntry ENTRY_BRASS_SHOTGUN = new GunEntry()
             .setAmmoCount(2)
-            .setReloadTime(20)
+            .setReloadTime(120)
             .setAmmoPredicate(BlackPowderItems.BLUNDER_BALL)
             .setPelletCount(12)
             .setBulletSpread(30)
@@ -82,7 +82,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundMiddle(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_MIDDLE)
             .setReloadSoundEnd(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_END);
     public static GunEntry ENTRY_BLUNDERBUSS = new GunEntry()
-            .setReloadTime(80)
+            .setReloadTime(180)
             .setAmmoPredicate(BlackPowderItems.BLUNDER_BALL)
             .setPelletCount(10)
             .setBulletSpread(15)
@@ -93,7 +93,7 @@ public class BlackPowderGunEntries {
             .setReloadSoundMiddle(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_MIDDLE)
             .setReloadSoundEnd(BlackPowderSounds.ITEM_BLUNDERBUSS_LOADING_END);
     public static GunEntry ENTRY_RIFLE = new GunEntry()
-            .setReloadTime(60)
+            .setReloadTime(160)
             .setAmmoPredicate(BlackPowderItems.MUSKET_BALL)
             .setDamage(25)
             .setSource((e) -> e.getDamageSources().generic())
